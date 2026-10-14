@@ -4,14 +4,14 @@ Swipe through your Todoist tasks one project at a time. Each task comes up as a 
 
 | Gesture | Key | What happens in Todoist |
 |---|---|---|
-| Swipe ← | ← | **Done**: completes the task. A repeating task moves to its next date instead. |
-| Swipe → | → | **Keep**: nothing changes. The task stays as it is. |
-| Swipe ↑ | ↑ | **Today**: due date set to today. Repeat rules and times of day are kept. |
-| Swipe ↓ | ↓ | **Later**: pick tomorrow, this weekend, next week, next month, a date, or remove the date. |
+| Swipe ← | ← | **Keep**: nothing changes. The task stays as it is. |
+| Swipe → | → | **Done**: completes the task. A repeating task moves to its next date instead. |
+| Swipe ↑ | ↑ | **Later**: pick today, tomorrow, this weekend, next week, next month, a date, or remove the date. Repeat rules and times of day are kept. |
+| Swipe ↓ | ↓ or ⌫ | **Delete**: deletes the task, after a 5-second window to undo it. |
+| Later → Today | T | Due date set to today. |
 | More → Move | M | Moves the task to another project. The last three destinations are listed first. |
 | More → Priority | P | Sets P1–P4. |
 | More → Skip | S | Sends the card to the back of the deck. Nothing changes. |
-| More → Delete | ⌫ | Deletes the task, after a 5-second window to undo it. |
 | Undo button | Z or ⌘Z | Reverses the last decision in Todoist. Deletes can only be undone within their 5 seconds. |
 
 Cards come up in this order: overdue first (oldest due date first), then today, then undated (oldest first), then upcoming. Todoist headers (tasks starting with `* `) are skipped. Subtasks are skipped unless you tick **Include subtasks**. A parent project's **All N** button sorts it together with its nested projects.

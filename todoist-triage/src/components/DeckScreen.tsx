@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { CalendarClock, Check, ChevronLeft, Ellipsis, Sun, ThumbsUp, Undo2 } from 'lucide-react';
+import { CalendarClock, Check, ChevronLeft, Ellipsis, ThumbsUp, Trash2, Undo2 } from 'lucide-react';
 import type { Backend, Priority, Project, Task } from '../api/types';
 import { describeDecision, type Decision } from '../lib/decisions';
 import { countSubtasks } from '../lib/deck';
@@ -108,13 +108,13 @@ export function DeckScreen({ backend, title, deck, allTasks, projects, today, on
 
   const act = useMemo(
     () => ({
-      done: () => commit({ kind: 'done' }, 'left'),
-      keep: () => commit({ kind: 'keep' }, 'right'),
+      keep: () => commit({ kind: 'keep' }, 'left'),
+      done: () => commit({ kind: 'done' }, 'right'),
       today: () => commit({ kind: 'schedule', date: today }, 'up'),
       later: () => current && !exit && setSheet('later'),
       skip: () => commit({ kind: 'skip' }, 'fade'),
-      remove: () => commit({ kind: 'delete' }, 'fade'),
-      schedule: (date: string | null) => commit({ kind: 'schedule', date }, 'down'),
+      remove: () => commit({ kind: 'delete' }, 'down'),
+      schedule: (date: string | null) => commit({ kind: 'schedule', date }, 'up'),
       priority: (priority: Priority) => commit({ kind: 'priority', priority }, 'fade'),
       move: (project: Project) => {
         const recent = [project.id, ...recentMoves.filter((id) => id !== project.id)].slice(0, 3);
@@ -128,10 +128,10 @@ export function DeckScreen({ backend, title, deck, allTasks, projects, today, on
 
   const onSwipe = useCallback(
     (dir: SwipeDir) => {
-      if (dir === 'left') act.done();
-      else if (dir === 'right') act.keep();
-      else if (dir === 'up') act.today();
-      else act.later();
+      if (dir === 'left') act.keep();
+      else if (dir === 'right') act.done();
+      else if (dir === 'up') act.later();
+      else act.remove();
     },
     [act],
   );
@@ -149,10 +149,11 @@ export function DeckScreen({ backend, title, deck, allTasks, projects, today, on
       }
       if (e.metaKey || e.ctrlKey) return;
       const map: Record<string, () => void> = {
-        arrowleft: act.done,
-        arrowright: act.keep,
-        arrowup: act.today,
-        arrowdown: act.later,
+        arrowleft: act.keep,
+        arrowright: act.done,
+        arrowup: act.later,
+        arrowdown: act.remove,
+        t: act.today,
         z: undo,
         u: undo,
         s: act.skip,
@@ -259,15 +260,15 @@ export function DeckScreen({ backend, title, deck, allTasks, projects, today, on
       {!finished && (
         <nav className="actions" aria-label="Decide this task">
           <ActionButton className="small" label="Undo" onClick={undo} disabled={!canUndo} icon={<Undo2 size={18} />} />
-          <ActionButton className="done" label="Done ←" onClick={act.done} icon={<Check size={24} />} />
-          <ActionButton className="later" label="Later ↓" onClick={act.later} icon={<CalendarClock size={22} />} />
-          <ActionButton className="today" label="Today ↑" onClick={act.today} icon={<Sun size={22} />} />
-          <ActionButton className="keep" label="Keep →" onClick={act.keep} icon={<ThumbsUp size={22} />} />
+          <ActionButton className="keep" label="Keep ←" onClick={act.keep} icon={<ThumbsUp size={22} />} />
+          <ActionButton className="later" label="Later ↑" onClick={act.later} icon={<CalendarClock size={22} />} />
+          <ActionButton className="delete" label="Delete ↓" onClick={act.remove} icon={<Trash2 size={21} />} />
+          <ActionButton className="done" label="Done →" onClick={act.done} icon={<Check size={24} />} />
           <ActionButton className="small" label="More" onClick={() => setSheet('more')} icon={<Ellipsis size={18} />} />
         </nav>
       )}
 
-      {current && sheet === 'later' && <LaterSheet task={current} today={today} onPick={act.schedule} onClose={() => setSheet(null)} />}
+      {current && sheet === 'later' && <LaterSheet task={current} today={today} onToday={act.today} onPick={act.schedule} onClose={() => setSheet(null)} />}
       {current && sheet === 'priority' && <PrioritySheet task={current} onPick={act.priority} onClose={() => setSheet(null)} />}
       {current && sheet === 'move' && (
         <MoveSheet task={current} projects={projects} recent={recentMoves} onPick={act.move} onClose={() => setSheet(null)} />

@@ -105,17 +105,17 @@ export function SwipeCard({ exit, onExited, onSwipe, children }: Props) {
       onPointerCancel={onPointerCancel}
     >
       {children}
-      <span className="stamp done" style={{ opacity: ink('left') }} aria-hidden>
-        Done
-      </span>
-      <span className="stamp keep" style={{ opacity: ink('right') }} aria-hidden>
+      <span className="stamp keep" style={{ opacity: ink('left') }} aria-hidden>
         Keep
       </span>
-      <span className="stamp today" style={{ opacity: ink('up') }} aria-hidden>
-        Today
+      <span className="stamp done" style={{ opacity: ink('right') }} aria-hidden>
+        Done
       </span>
-      <span className="stamp later" style={{ opacity: ink('down') }} aria-hidden>
+      <span className="stamp later" style={{ opacity: ink('up') }} aria-hidden>
         Later
+      </span>
+      <span className="stamp delete" style={{ opacity: ink('down') }} aria-hidden>
+        Delete
       </span>
     </div>
   );

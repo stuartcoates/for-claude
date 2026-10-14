@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ArrowUpRight, CalendarX, Flag, FolderInput, SkipForward, Trash2 } from 'lucide-react';
+import { ArrowUpRight, CalendarX, Flag, FolderInput, SkipForward, Sun, Trash2 } from 'lucide-react';
 import type { Priority, Project, Task } from '../api/types';
 import { formatDate, laterOptions } from '../lib/dates';
 import { projectTree } from '../lib/deck';
@@ -8,11 +8,30 @@ import { Sheet } from './Sheet';
 
 const title = (task: Task) => plainText(task.content);
 
-export function LaterSheet({ task, today, onPick, onClose }: { task: Task; today: string; onPick: (date: string | null) => void; onClose: () => void }) {
+export function LaterSheet({
+  task,
+  today,
+  onToday,
+  onPick,
+  onClose,
+}: {
+  task: Task;
+  today: string;
+  onToday: () => void;
+  onPick: (date: string | null) => void;
+  onClose: () => void;
+}) {
   const [custom, setCustom] = useState('');
   return (
-    <Sheet title="Later" subtitle={title(task)} onClose={onClose}>
+    <Sheet title="When?" subtitle={title(task)} onClose={onClose}>
       <ul className="options">
+        <li>
+          <button type="button" className="option" onClick={onToday}>
+            <Sun size={18} aria-hidden style={{ color: 'var(--heat)' }} />
+            Today
+            <span className="when">T</span>
+          </button>
+        </li>
         {laterOptions(today).map((o) => (
           <li key={o.key}>
             <button type="button" className="option" onClick={() => onPick(o.date)}>
@@ -172,7 +191,7 @@ export function MoreSheet({
         </li>
         <li>
           <button type="button" className="option danger" onClick={onDelete}>
-            <Trash2 size={18} aria-hidden /> Delete task <span className="when">⌫</span>
+            <Trash2 size={18} aria-hidden /> Delete task <span className="when">↓</span>
           </button>
         </li>
       </ul>

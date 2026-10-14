@@ -657,29 +657,29 @@ a {
 
 .stamp.done {
   top: 34px;
-  right: 18px;
+  left: 18px;
   color: var(--done);
-  transform: rotate(12deg);
+  transform: rotate(-12deg);
 }
 
 .stamp.keep {
   top: 34px;
-  left: 18px;
+  right: 18px;
   color: var(--ink);
-  transform: rotate(-12deg);
-}
-
-.stamp.today {
-  bottom: 70px;
-  left: 50%;
-  color: var(--heat);
-  transform: translateX(-50%) rotate(-4deg);
+  transform: rotate(12deg);
 }
 
 .stamp.later {
-  top: 34px;
+  bottom: 70px;
   left: 50%;
   color: var(--later);
+  transform: translateX(-50%) rotate(-4deg);
+}
+
+.stamp.delete {
+  top: 34px;
+  left: 50%;
+  color: var(--drop);
   transform: translateX(-50%) rotate(4deg);
 }
 
@@ -742,9 +742,9 @@ a {
   color: var(--later);
 }
 
-.action.today .disc {
-  border-color: var(--heat);
-  color: var(--heat);
+.action.delete .disc {
+  border-color: var(--drop);
+  color: var(--drop);
 }
 
 .action.keep .disc {

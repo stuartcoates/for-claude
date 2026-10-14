@@ -25,16 +25,16 @@ export function WelcomeScreen({ error, insideClaude, onToken, onRetryConnector, 
         <p className="lede">Sort your Todoist tasks one project at a time. Each task comes up as a ticket; swipe to decide.</p>
         <ul className="legend" aria-label="Swipe directions">
           <li>
-            <span className="arrow" style={{ color: 'var(--done)' }}>←</span> Done
+            <span className="arrow">←</span> Keep as is
           </li>
           <li>
-            <span className="arrow">→</span> Keep as is
+            <span className="arrow" style={{ color: 'var(--done)' }}>→</span> Done
           </li>
           <li>
-            <span className="arrow" style={{ color: 'var(--heat)' }}>↑</span> Do today
+            <span className="arrow" style={{ color: 'var(--later)' }}>↑</span> Later or today
           </li>
           <li>
-            <span className="arrow" style={{ color: 'var(--later)' }}>↓</span> Later…
+            <span className="arrow" style={{ color: 'var(--drop)' }}>↓</span> Delete
           </li>
         </ul>
 
