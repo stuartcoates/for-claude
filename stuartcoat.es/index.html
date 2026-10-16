@@ -13,7 +13,8 @@
 <style>
 /* Stuart Coates design system: Paper theme by default, Felt (the black letterboard) at night.
    Layout: a poster-register opener (condensed name + overlapping paper sheets), then a form-register
-   page underneath: numbered label heads, ledgers, one Felt menu board. Every value is a system token. */
+   page underneath: numbered label heads, ledgers, one Felt menu board. Every value is a system token.
+   Motion departs from the system's "instant state changes only" rule at Stuart's request; see the script. */
 @font-face { font-family: "League Gothic Condensed"; src: url("fonts/LeagueGothicCondensed-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "Archivo"; src: url("fonts/Archivo-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
 @font-face { font-family: "Archivo"; src: url("fonts/Archivo-Italic-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: italic; font-display: swap; }
@@ -124,6 +125,8 @@ a { color: var(--accent); text-decoration-thickness: var(--stroke-hair); text-un
 }
 .poster span { display: block; }
 .voice { font-family: var(--font-voice); font-size: 22px; line-height: 30px; max-width: 26ch; }
+.poster .ch { display: inline-block; overflow: hidden; vertical-align: top; padding-top: 0.06em; margin-top: -0.06em; }
+.poster .ch-in { display: inline-block; }
 .hero-art { min-width: 0; }
 .hero-art svg { display: block; width: 100%; height: auto; max-width: 100%; }
 .sky { fill: var(--stock-sky); }
@@ -211,10 +214,16 @@ footer { padding-top: var(--space-1); border-top: var(--stroke-hair) solid var(-
     </div>
     <div class="hero-art" aria-hidden="true">
       <svg viewBox="0 0 480 360" width="480" height="360" preserveAspectRatio="xMidYMid slice">
-        <defs><clipPath id="hatch-panel"><rect x="348" y="24" width="108" height="192"/></clipPath></defs>
-        <rect class="sky" x="36" y="0" width="216" height="288"/>
-        <rect class="deep" x="36" y="300" width="144" height="24"/>
-        <rect class="blue" x="180" y="120" width="168" height="204"/>
+        <defs>
+          <clipPath id="hatch-panel"><rect id="clip-hatch" x="348" y="24" width="108" height="192"/></clipPath>
+          <clipPath id="clip-blue"><rect id="clip-blue-r" x="180" y="120" width="168" height="204"/></clipPath>
+          <clipPath id="clip-strip"><rect id="clip-strip-r" x="36" y="300" width="144" height="24"/></clipPath>
+          <clipPath id="clip-mari"><rect id="clip-mari-r" x="396" y="204" width="96" height="168"/></clipPath>
+          <filter id="mb-sky" x="-10%" y="-60%" width="120%" height="220%"><feGaussianBlur id="mb-sky-b" stdDeviation="0 0"/></filter>
+        </defs>
+        <rect id="art-sky" class="sky" x="36" y="0" width="216" height="288" filter="url(#mb-sky)"/>
+        <rect class="deep" x="36" y="300" width="144" height="24" clip-path="url(#clip-strip)"/>
+        <rect class="blue" x="180" y="120" width="168" height="204" clip-path="url(#clip-blue)"/>
         <g class="hatch" clip-path="url(#hatch-panel)">
           <line x1="348" y1="24" x2="156" y2="216"/><line x1="360" y1="24" x2="168" y2="216"/><line x1="372" y1="24" x2="180" y2="216"/><line x1="384" y1="24" x2="192" y2="216"/>
           <line x1="396" y1="24" x2="204" y2="216"/><line x1="408" y1="24" x2="216" y2="216"/><line x1="420" y1="24" x2="228" y2="216"/><line x1="432" y1="24" x2="240" y2="216"/>
@@ -224,7 +233,7 @@ footer { padding-top: var(--space-1); border-top: var(--stroke-hair) solid var(-
           <line x1="588" y1="24" x2="396" y2="216"/><line x1="600" y1="24" x2="408" y2="216"/><line x1="612" y1="24" x2="420" y2="216"/><line x1="624" y1="24" x2="432" y2="216"/>
           <line x1="636" y1="24" x2="444" y2="216"/><line x1="648" y1="24" x2="456" y2="216"/>
         </g>
-        <rect class="mari" x="396" y="204" width="96" height="168"/>
+        <rect class="mari" x="396" y="204" width="96" height="168" clip-path="url(#clip-mari)"/>
       </svg>
     </div>
   </div>
@@ -306,5 +315,157 @@ footer { padding-top: var(--space-1); border-top: var(--stroke-hair) solid var(-
   <footer class="label muted">Stuart Coates · stuartcoat.es</footer>
 
 </div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs id="letter-filters"></defs></svg>
+<script>
+/* Motion: a print run on a 120 BPM grid (one beat = 0.5s). Each sheet grows out of the edge of the
+   one before it: the sky sheet drops in, riso blue rolls right from inside it, the ink strip runs left
+   off the blue, the hatch carries on right from the blue's edge, marigold drops out of the hatch.
+   Every style is computed from time in seek(t); no CSS animation, no fades, springs are critically
+   damped (no bounce), and fast moves blur along their direction of travel.
+   The HTML is already the finished frame, so without script, or with reduced motion, nothing moves. */
+(function () {
+  var BEAT = 0.5;
+  var END = 5.5 * BEAT;
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  function spring(t, w) { // position 0..1 and velocity per second
+    if (t <= 0) return [0, 0];
+    var e = Math.exp(-w * t);
+    return [1 - (1 + w * t) * e, w * w * t * e];
+  }
+  function expo(t, d) {
+    if (t <= 0) return 0;
+    if (t >= d) return 1;
+    return (1 - Math.pow(2, -10 * t / d)) / (1 - Math.pow(2, -10));
+  }
+  function $(id) { return document.getElementById(id); }
+
+  try {
+    var NS = 'http://www.w3.org/2000/svg';
+    var webkitOnly = /AppleWebKit/.test(navigator.userAgent) && !/Chrome|Chromium|Edg/.test(navigator.userAgent);
+
+    // Split the name into letters that rise from the baseline, one per sixteenth note.
+    var h1 = document.querySelector('.poster');
+    h1.setAttribute('aria-label', h1.textContent.replace(/\s+/g, ' ').trim());
+    var letters = [];
+    var defs = $('letter-filters');
+    Array.prototype.forEach.call(h1.querySelectorAll(':scope > span'), function (word, w) {
+      var text = word.textContent;
+      word.textContent = '';
+      word.setAttribute('aria-hidden', 'true');
+      for (var i = 0; i < text.length; i++) {
+        var outer = document.createElement('span'); outer.className = 'ch';
+        var inner = document.createElement('span'); inner.className = 'ch-in'; inner.textContent = text[i];
+        outer.appendChild(inner); word.appendChild(outer);
+        var n = letters.length, f = null;
+        if (!webkitOnly) {
+          var filt = document.createElementNS(NS, 'filter');
+          filt.setAttribute('id', 'mb-ch-' + n);
+          filt.setAttribute('x', '-10%'); filt.setAttribute('y', '-40%');
+          filt.setAttribute('width', '120%'); filt.setAttribute('height', '180%');
+          f = document.createElementNS(NS, 'feGaussianBlur');
+          f.setAttribute('stdDeviation', '0 0');
+          filt.appendChild(f); defs.appendChild(filt);
+        }
+        letters.push({ el: inner, blur: f, id: 'mb-ch-' + n, start: (n + (w > 0 ? 1 : 0)) * BEAT / 4 });
+      }
+    });
+
+    var sky = $('art-sky'), skyBlur = $('mb-sky-b');
+    var blue = $('clip-blue-r'), strip = $('clip-strip-r'), hatch = $('clip-hatch'), mari = $('clip-mari-r');
+    var voice = document.querySelector('.hero .voice');
+    var place = document.querySelector('.hero .label');
+
+    function seek(t) {
+      letters.forEach(function (L) {
+        var s = spring(t - L.start, 16);
+        L.el.style.transform = 'translateY(' + ((1 - s[0]) * 105).toFixed(2) + '%)';
+        if (L.blur) {
+          var px = s[1] * L.el.offsetHeight / 60; // distance travelled this frame
+          var sd = Math.min(10, px * 0.5);
+          L.blur.setAttribute('stdDeviation', '0 ' + sd.toFixed(2));
+          L.el.style.filter = sd > 0.2 ? 'url(#' + L.id + ')' : 'none';
+        }
+      });
+
+      var k = spring(t, 14); // beat 1: the sky sheet drops in from above
+      sky.setAttribute('transform', 'translate(0 ' + (-(1 - k[0]) * 300).toFixed(2) + ')');
+      skyBlur.setAttribute('stdDeviation', '0 ' + Math.min(14, k[1] * 300 / 60 * 0.5).toFixed(2));
+
+      var b = expo(t - BEAT, 0.35); // beat 2: riso blue rolls right from inside the sheet
+      blue.setAttribute('width', (168 * b).toFixed(2));
+
+      var st = expo(t - 1.5 * BEAT, 0.25); // and-of-2: ink strip runs left off the blue
+      strip.setAttribute('x', (180 - 144 * st).toFixed(2));
+      strip.setAttribute('width', (144 * st).toFixed(2));
+
+      var hp = expo(t - 2 * BEAT, 0.35); // beat 3: hatch carries on right from the blue's edge
+      hatch.setAttribute('width', (108 * hp).toFixed(2));
+
+      var m = spring(t - 3 * BEAT, 16); // beat 4: marigold drops out of the hatch
+      mari.setAttribute('height', (168 * m[0]).toFixed(2));
+
+      // beat 5 and its off-beat: the voice line and the place line print left to right
+      voice.style.clipPath = 'inset(-0.2em ' + ((1 - expo(t - 4 * BEAT, 0.4)) * 100).toFixed(2) + '% -0.2em 0)';
+      place.style.clipPath = 'inset(-0.2em ' + ((1 - expo(t - 4.5 * BEAT, 0.35)) * 100).toFixed(2) + '% -0.2em 0)';
+    }
+
+    function finish() {
+      letters.forEach(function (L) { L.el.style.transform = ''; L.el.style.filter = 'none'; });
+      sky.removeAttribute('transform'); skyBlur.setAttribute('stdDeviation', '0 0');
+      voice.style.clipPath = ''; place.style.clipPath = '';
+      seek(END + 10);
+      voice.style.clipPath = ''; place.style.clipPath = '';
+    }
+
+    window.__heroSeek = seek; // lets a test scrub the timeline frame by frame
+    seek(0);
+    var t0 = null;
+    function frame(now) {
+      if (t0 === null) t0 = now;
+      var t = (now - t0) / 1000;
+      if (t >= END) { finish(); return; }
+      try { seek(t); } catch (e) { finish(); return; }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+
+    // The menu board: when it first comes into view, the dotted leaders run out to each figure,
+    // one row per eighth note. The words and figures stay visible throughout.
+    var board = document.querySelector('.board');
+    var rows = Array.prototype.map.call(board.querySelectorAll('.row'), function (r) {
+      return { lead: r.querySelector('.lead') };
+    });
+    function seekBoard(t) {
+      rows.forEach(function (r, i) {
+        var s = t - i * BEAT / 2;
+        r.lead.style.clipPath = 'inset(-4px ' + ((1 - expo(s, 0.3)) * 100).toFixed(2) + '% -4px 0)';
+      });
+    }
+    window.__boardSeek = seekBoard;
+    var BOARD_END = (rows.length - 1) * BEAT / 2 + 0.5;
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        if (!entries.some(function (e) { return e.isIntersecting; })) return;
+        io.disconnect();
+        var b0 = null;
+        (function step(now) {
+          if (b0 === null) b0 = now;
+          var t = (now - b0) / 1000;
+          if (t >= BOARD_END) { rows.forEach(function (r) { r.lead.style.clipPath = ''; }); return; }
+          seekBoard(t);
+          requestAnimationFrame(step);
+        })(performance.now());
+      }, { threshold: 0.35 });
+      io.observe(board);
+    }
+  } catch (err) {
+    // Any failure leaves the finished page as written in the HTML.
+    document.querySelectorAll('.poster .ch-in, .hero .voice, .hero .label, .board .lead, .board .value').forEach(function (el) {
+      el.style.transform = ''; el.style.clipPath = ''; el.style.filter = '';
+    });
+  }
+})();
+</script>
 </body>
 </html>
