@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stuart Coates</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Stuart Coates runs hospitality operations in Portland, Oregon: boutique hotels, a wellness club, and a lot of events.">
+<meta property="og:title" content="Stuart Coates">
+<meta property="og:description" content="Hospitality operations in Portland, Oregon.">
+<meta property="og:url" content="https://stuartcoat.es/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%236B1F2A'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' text-anchor='middle' fill='%23F2EADF'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: one narrow left-aligned column, read like a property fact sheet. Warm cream + oxblood carried over from the cover-letter PDFs. */
+:root {
+  --paper: #F2EADF;
+  --ink: #2B2220;
+  --muted: #76655F;
+  --rule: #D8CBBB;
+  --oxblood: #6B1F2A;
+  --tint: #EADDD0;
+  --display: "Gloock", "Iowan Old Style", Georgia, serif;
+  --body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #1D1716; --ink: #EFE5D8; --muted: #A9978E; --rule: #3B302D; --oxblood: #D47F8A; --tint: #2A201F;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #1D1716; --ink: #EFE5D8; --muted: #A9978E; --rule: #3B302D; --oxblood: #D47F8A; --tint: #2A201F;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding-block: clamp(2.5rem, 8vw, 5.5rem) 3rem;
+  display: grid;
+  gap: clamp(3rem, 8vw, 4.5rem);
+}
+a { color: var(--oxblood); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible { outline: 2px solid var(--oxblood); outline-offset: 3px; border-radius: 2px; }
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0;
+}
+.domain { font-family: var(--display); font-size: 1rem; letter-spacing: 0.01em; text-transform: none; color: var(--muted); }
+.domain b { font-weight: 400; color: var(--oxblood); }
+
+header { display: grid; gap: 1.25rem; }
+h1 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(3rem, 13vw, 5.25rem);
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+  margin: 0;
+  text-wrap: balance;
+}
+.lede {
+  font-family: var(--display);
+  font-size: clamp(1.35rem, 4.2vw, 1.7rem);
+  line-height: 1.3;
+  margin: 0;
+  text-wrap: balance;
+}
+.intro { margin: 0; max-width: 34rem; }
+
+section { display: grid; gap: 1.25rem; }
+h2 {
+  font-family: var(--body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.roles { list-style: none; margin: 0; padding: 0; display: grid; }
+.role {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 0.25rem 1.5rem;
+  padding-block: 1.4rem;
+  border-bottom: 1px solid var(--rule);
+}
+.role:first-child { padding-top: 0.4rem; }
+.years {
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  padding-top: 0.3rem;
+}
+.role-body { display: grid; gap: 0.35rem; min-width: 0; }
+.role h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.15;
+  margin: 0;
+}
+.title { margin: 0; font-weight: 600; }
+.sheet {
+  margin: 0.1rem 0 0.3rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--oxblood);
+}
+.role p:last-child { margin: 0; }
+
+.also { margin: 0; display: grid; gap: 0.9rem; }
+.also p { margin: 0; }
+.also em { font-style: italic; }
+
+.contact { margin: 0; display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 0.6rem 1.5rem; }
+.contact dt { font-size: 0.875rem; color: var(--muted); padding-top: 0.1rem; }
+.contact dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+
+footer {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  border-top: 1px solid var(--rule);
+  padding-top: 1rem;
+}
+
+@media (max-width: 34rem) {
+  .role, .contact { grid-template-columns: minmax(0, 1fr); }
+  .years { padding-top: 0; }
+  .contact dt { padding-top: 0.5rem; }
+}
+</style>
+</head>
+<body>
+<main>
+
+  <header>
+    <p class="label domain">stuartcoat<b>.</b>es</p>
+    <h1>Stuart Coates</h1>
+    <p class="lede">I run hospitality operations in Portland, Oregon.</p>
+    <p class="intro">Ten years across boutique hotels, a wellness club, and a lot of events. Most of my work is the part guests never see: the SOPs, the training manual, the booking-system migration, the front desk rebuilt from a crew of five. The goal is a property that runs the same on a short-staffed Tuesday as it did on opening night.</p>
+  </header>
+
+  <section aria-labelledby="work">
+    <h2 id="work">Work</h2>
+    <ol class="roles">
+      <li class="role">
+        <span class="years">2024–2026</span>
+        <div class="role-body">
+          <h3>Knot Springs</h3>
+          <p class="title">Senior Coordinator, Reception</p>
+          <p class="sheet">$6.7M wellness club · 325 members · 6,000–8,000 visits a month</p>
+          <p>Led a nine-person reception team. Wrote a 90-page training manual and 74 SOPs, which took onboarding from months to two weeks. Then moved all 110 staff from Mindbody to Trybe in six weeks.</p>
+        </div>
+      </li>
+      <li class="role">
+        <span class="years">2021–2024</span>
+        <div class="role-body">
+          <h3>Ace Hotel Portland</h3>
+          <p class="title">Director of Operations</p>
+          <p class="sheet">78 rooms · post-closure relaunch</p>
+          <p>Took the hotel from a skeleton crew of five to fully open in two weeks, hiring and training the front desk while rooms were still under renovation. Built the guest-facing systems from scratch and kept retail, minibar, and breakfast worth having through stretches under 20% occupancy.</p>
+        </div>
+      </li>
+      <li class="role">
+        <span class="years">2018–2020</span>
+        <div class="role-body">
+          <h3>The Hoxton, Portland</h3>
+          <p class="title">Events Operations Manager</p>
+          <p class="sheet">119 rooms · U.S. West Coast launch</p>
+          <p>Opened the hotel with a 1,500-person party across seven venues and four bars, then ran 300-plus events after it. Pulled the event SOPs from five international properties into one shared playbook.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="also">
+    <h2 id="also">Also</h2>
+    <div class="also">
+      <p>I'm writing a book, <em>Am I Doing This Right?</em>, a field guide to adulthood from someone who learned most of it on the job.</p>
+      <p>B.S. in Business Administration, Portland State University.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="contact">
+    <h2 id="contact">Get in touch</h2>
+    <dl class="contact">
+      <dt>Email</dt>
+      <dd><a href="mailto:hello@stuartcoat.es">hello@stuartcoat.es</a></dd>
+      <dt>Bluesky</dt>
+      <dd><a href="https://bsky.app/profile/stuartcoat.es">@stuartcoat.es</a></dd>
+      <dt>Résumé</dt>
+      <dd>Happy to send one. Just ask.</dd>
+    </dl>
+  </section>
+
+  <footer>Portland, Oregon</footer>
+
+</main>
+</body>
+</html>
