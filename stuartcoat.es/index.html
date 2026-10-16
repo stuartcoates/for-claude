@@ -5,34 +5,62 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Stuart Coates</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Stuart Coates runs hospitality operations in Portland, Oregon: boutique hotels, a wellness club, and a lot of events.">
+<meta name="description" content="Stuart Coates runs front office and operations for hotels and clubs.">
 <meta property="og:title" content="Stuart Coates">
-<meta property="og:description" content="Hospitality operations in Portland, Oregon.">
+<meta property="og:description" content="Front office and operations for hotels and clubs.">
 <meta property="og:url" content="https://stuartcoat.es/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%236B1F2A'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' text-anchor='middle' fill='%23F2EADF'%3ES%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231b38b2'/%3E%3C/svg%3E">
 <style>
-/* Layout: one narrow left-aligned column, read like a property fact sheet. Warm cream + oxblood carried over from the cover-letter PDFs. */
+/* Stuart Coates design system: Paper theme by default, Felt (the black letterboard) at night.
+   Layout: a poster-register opener (condensed name + overlapping paper sheets), then a form-register
+   page underneath: numbered label heads, ledgers, one Felt menu board. Every value is a system token. */
+@font-face { font-family: "League Gothic Condensed"; src: url("fonts/LeagueGothicCondensed-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Archivo"; src: url("fonts/Archivo-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Archivo"; src: url("fonts/Archivo-Italic-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: italic; font-display: swap; }
+@font-face { font-family: "Belleza"; src: url("fonts/Belleza-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+
 :root {
-  --paper: #F2EADF;
-  --ink: #2B2220;
-  --muted: #76655F;
-  --rule: #D8CBBB;
-  --oxblood: #6B1F2A;
-  --tint: #EADDD0;
-  --display: "Gloock", "Iowan Old Style", Georgia, serif;
-  --body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  /* Paper */
+  --paper: #e9e9e9;
+  --ink: #131413;
+  --ink-muted: #5b5c56;
+  --rule: var(--ink);
+  --accent: #1b38b2;
+  --accent-tint: #c9c9e2;
+  --on-accent: #e9e9e9;
+  --focus: var(--ink);
+  --board-edge: #1e1210;
+  /* Constant in both themes: printed ink and coloured stocks */
+  --riso-blue: #1b38b2;
+  --on-riso-blue: #e9e9e9;
+  --on-stock: #131413;
+  --stock-sky: #b1e0f4;
+  --stock-marigold: #f9bb02;
+  /* Felt, for the menu board on a Paper page */
+  --felt: #1e1210;
+  --felt-ink: #e8e0e3;
+  --felt-muted: #9c9295;
+  --felt-accent: #837ce4;
+
+  --font-condensed: "League Gothic Condensed", "League Gothic", "Arial Narrow", sans-serif;
+  --font-sans: Archivo, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-voice: Belleza, Optima, Candara, sans-serif;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px;
+  --space-8: 32px; --space-12: 48px; --space-16: 64px; --space-24: 96px;
+  --radius-pill: 999px;
+  --stroke-hair: 1px; --stroke-frame: 2px; --underline-weight: 0.06em;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #1D1716; --ink: #EFE5D8; --muted: #A9978E; --rule: #3B302D; --oxblood: #D47F8A; --tint: #2A201F;
+    --paper: #1e1210; --ink: #e8e0e3; --ink-muted: #9c9295; --accent: #837ce4;
+    --accent-tint: #1513a8; --on-accent: #131413; --board-edge: #e8e0e3;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #1D1716; --ink: #EFE5D8; --muted: #A9978E; --rule: #3B302D; --oxblood: #D47F8A; --tint: #2A201F;
+  --paper: #1e1210; --ink: #e8e0e3; --ink-muted: #9c9295; --accent: #837ce4;
+  --accent-tint: #1513a8; --on-accent: #131413; --board-edge: #e8e0e3;
   color-scheme: dark;
 }
 
@@ -42,186 +70,241 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--body);
-  font-size: 1.0625rem;
-  line-height: 1.6;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 22px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
+  overflow-x: hidden;
 }
-main {
-  max-width: 40rem;
+.page {
+  max-width: 960px;
   margin: 0 auto;
-  padding-block: clamp(2.5rem, 8vw, 5.5rem) 3rem;
+  padding-block: var(--space-8) var(--space-12);
   display: grid;
-  gap: clamp(3rem, 8vw, 4.5rem);
+  gap: var(--space-12);
 }
-a { color: var(--oxblood); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
-a:hover { text-decoration-thickness: 2px; }
-a:focus-visible { outline: 2px solid var(--oxblood); outline-offset: 3px; border-radius: 2px; }
+p { margin: 0; }
+a { color: var(--accent); text-decoration-thickness: var(--stroke-hair); text-underline-offset: 0.18em; }
+:focus-visible { outline: var(--stroke-frame) solid var(--focus); outline-offset: 2px; }
 
-.label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin: 0;
-}
-.domain { font-family: var(--display); font-size: 1rem; letter-spacing: 0.01em; text-transform: none; color: var(--muted); }
-.domain b { font-weight: 400; color: var(--oxblood); }
+/* Type styles from tokens.json */
+.label { font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+.label-lg { font-size: 13px; line-height: 18px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.body-sm { font-size: 13px; line-height: 19px; }
+.muted { color: var(--ink-muted); }
 
-header { display: grid; gap: 1.25rem; }
-h1 {
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: clamp(3rem, 13vw, 5.25rem);
-  line-height: 0.95;
-  letter-spacing: -0.015em;
-  margin: 0;
-  text-wrap: balance;
+/* Running head */
+.runhead {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2) var(--space-4);
+  padding-bottom: var(--space-1);
+  border-bottom: var(--stroke-hair) solid var(--rule);
 }
-.lede {
-  font-family: var(--display);
-  font-size: clamp(1.35rem, 4.2vw, 1.7rem);
-  line-height: 1.3;
-  margin: 0;
-  text-wrap: balance;
-}
-.intro { margin: 0; max-width: 34rem; }
+.runhead nav a { color: var(--ink); text-decoration: none; }
+.runhead nav a:hover { color: var(--accent); }
 
-section { display: grid; gap: 1.25rem; }
-h2 {
-  font-family: var(--body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin: 0;
-  padding-bottom: 0.6rem;
-  border-bottom: 1px solid var(--rule);
-}
-
-.roles { list-style: none; margin: 0; padding: 0; display: grid; }
-.role {
+/* Poster opener */
+.hero {
   display: grid;
-  grid-template-columns: 7.5rem minmax(0, 1fr);
-  gap: 0.25rem 1.5rem;
-  padding-block: 1.4rem;
-  border-bottom: 1px solid var(--rule);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: var(--space-8);
+  align-items: end;
 }
-.role:first-child { padding-top: 0.4rem; }
-.years {
-  font-size: 0.875rem;
-  font-variant-numeric: tabular-nums;
-  color: var(--muted);
-  padding-top: 0.3rem;
-}
-.role-body { display: grid; gap: 0.35rem; min-width: 0; }
-.role h3 {
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: 1.5rem;
-  line-height: 1.15;
+.hero-words { display: grid; gap: var(--space-6); min-width: 0; }
+.poster {
   margin: 0;
+  font-family: var(--font-condensed);
+  font-weight: 400;
+  font-size: clamp(104px, 21vw, 168px);
+  line-height: 0.88;
+  letter-spacing: 0;
+  text-transform: uppercase;
 }
-.title { margin: 0; font-weight: 600; }
-.sheet {
-  margin: 0.1rem 0 0.3rem;
-  font-size: 0.8125rem;
-  letter-spacing: 0.04em;
-  font-variant-numeric: tabular-nums;
-  color: var(--oxblood);
-}
-.role p:last-child { margin: 0; }
+.poster span { display: block; }
+.voice { font-family: var(--font-voice); font-size: 22px; line-height: 30px; max-width: 26ch; }
+.hero-art { min-width: 0; }
+.hero-art svg { display: block; width: 100%; height: auto; max-width: 100%; }
+.sky { fill: var(--stock-sky); }
+.mari { fill: var(--stock-marigold); }
+.blue { fill: var(--riso-blue); }
+.deep { fill: var(--ink); }
+.hatch line { stroke: var(--riso-blue); stroke-width: 2; }
 
-.also { margin: 0; display: grid; gap: 0.9rem; }
-.also p { margin: 0; }
+.intro { display: grid; gap: var(--space-4); max-width: 64ch; }
+
+/* Section heads: label variant, numbered in accent */
+section { display: grid; gap: var(--space-4); }
+.head {
+  margin: 0;
+  font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  padding-bottom: var(--space-1);
+  border-bottom: var(--stroke-hair) solid var(--rule);
+}
+.head .num { color: var(--accent); margin-right: var(--space-3); }
+
+/* Ledger */
+.ledger { list-style: none; margin: 0; padding: 0; }
+.entry { border-bottom: var(--stroke-hair) solid var(--rule); padding-bottom: var(--space-3); }
+.row { display: flex; align-items: baseline; gap: var(--space-4); padding: var(--space-2) 0; }
+.row-main { min-width: 0; }
+.row-label { font-weight: 600; }
+.row-detail { color: var(--ink-muted); font-size: 13px; line-height: 19px; }
+.lead { flex: 1 1 var(--space-8); min-width: var(--space-8); }
+.value { flex: none; text-align: right; font-variant-numeric: tabular-nums; }
+.note { max-width: 64ch; }
+
+/* The menu board: always Felt */
+.board {
+  --paper: var(--felt); --ink: var(--felt-ink); --ink-muted: var(--felt-muted); --rule: var(--felt-ink); --accent: var(--felt-accent); --focus: var(--felt-ink);
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--stroke-frame) solid var(--board-edge);
+  padding: var(--space-6);
+}
+.board .row { padding: var(--space-2) 0; }
+.board .lead { align-self: baseline; height: 0; border-bottom: var(--stroke-frame) dotted var(--ink-muted); transform: translateY(-4px); }
+.board .value { font-family: var(--font-condensed); font-size: 32px; line-height: 1; letter-spacing: 0.02em; }
+
+.also { display: grid; gap: var(--space-4); }
 .also em { font-style: italic; }
 
-.contact { margin: 0; display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 0.6rem 1.5rem; }
-.contact dt { font-size: 0.875rem; color: var(--muted); padding-top: 0.1rem; }
-.contact dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
-
-footer {
-  font-size: 0.8125rem;
-  color: var(--muted);
-  border-top: 1px solid var(--rule);
-  padding-top: 1rem;
+/* Contact */
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  height: 40px; padding: 0 var(--space-6);
+  border-radius: var(--radius-pill); border: var(--stroke-frame) solid transparent;
+  font-family: var(--font-sans); font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer;
 }
+.btn-accent { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.btn-accent:hover { background: transparent; color: var(--ink); border-color: var(--rule); }
+.btn-outline { background: transparent; color: var(--ink); border-color: var(--rule); }
+.btn-outline:hover { background: var(--accent-tint); }
 
-@media (max-width: 34rem) {
-  .role, .contact { grid-template-columns: minmax(0, 1fr); }
-  .years { padding-top: 0; }
-  .contact dt { padding-top: 0.5rem; }
+footer { padding-top: var(--space-1); border-top: var(--stroke-hair) solid var(--rule); }
+
+@media (max-width: 720px) {
+  .page { gap: var(--space-8); padding-top: var(--space-4); }
+  .hero { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
+  .hero-art { order: -1; margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px))); }
+  .board { padding: var(--space-4); }
+  .board .value { font-size: 28px; }
 }
 </style>
 </head>
 <body>
-<main>
+<div class="page">
 
-  <header>
-    <p class="label domain">stuartcoat<b>.</b>es</p>
-    <h1>Stuart Coates</h1>
-    <p class="lede">I run hospitality operations in Portland, Oregon.</p>
-    <p class="intro">Ten years across boutique hotels, a wellness club, and a lot of events. Most of my work is the part guests never see: the SOPs, the training manual, the booking-system migration, the front desk rebuilt from a crew of five. The goal is a property that runs the same on a short-staffed Tuesday as it did on opening night.</p>
+  <header class="runhead label">
+    <span>stuartcoat.es</span>
+    <nav aria-label="Sections"><a href="#work">Work</a> / <a href="#numbers">Numbers</a> / <a href="#contact">Contact</a></nav>
   </header>
 
+  <div class="hero">
+    <div class="hero-words">
+      <h1 class="poster"><span>Stuart</span><span>Coates</span></h1>
+      <p class="voice">I run front office and operations for hotels and clubs.</p>
+      <p class="label muted">Hospitality operations · Los Angeles, California</p>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 480 360" width="480" height="360" preserveAspectRatio="xMidYMid slice">
+        <defs><clipPath id="hatch-panel"><rect x="348" y="24" width="108" height="192"/></clipPath></defs>
+        <rect class="sky" x="36" y="0" width="216" height="288"/>
+        <rect class="deep" x="36" y="300" width="144" height="24"/>
+        <rect class="blue" x="180" y="120" width="168" height="204"/>
+        <g class="hatch" clip-path="url(#hatch-panel)">
+          <line x1="348" y1="24" x2="156" y2="216"/><line x1="360" y1="24" x2="168" y2="216"/><line x1="372" y1="24" x2="180" y2="216"/><line x1="384" y1="24" x2="192" y2="216"/>
+          <line x1="396" y1="24" x2="204" y2="216"/><line x1="408" y1="24" x2="216" y2="216"/><line x1="420" y1="24" x2="228" y2="216"/><line x1="432" y1="24" x2="240" y2="216"/>
+          <line x1="444" y1="24" x2="252" y2="216"/><line x1="456" y1="24" x2="264" y2="216"/><line x1="468" y1="24" x2="276" y2="216"/><line x1="480" y1="24" x2="288" y2="216"/>
+          <line x1="492" y1="24" x2="300" y2="216"/><line x1="504" y1="24" x2="312" y2="216"/><line x1="516" y1="24" x2="324" y2="216"/><line x1="528" y1="24" x2="336" y2="216"/>
+          <line x1="540" y1="24" x2="348" y2="216"/><line x1="552" y1="24" x2="360" y2="216"/><line x1="564" y1="24" x2="372" y2="216"/><line x1="576" y1="24" x2="384" y2="216"/>
+          <line x1="588" y1="24" x2="396" y2="216"/><line x1="600" y1="24" x2="408" y2="216"/><line x1="612" y1="24" x2="420" y2="216"/><line x1="624" y1="24" x2="432" y2="216"/>
+          <line x1="636" y1="24" x2="444" y2="216"/><line x1="648" y1="24" x2="456" y2="216"/>
+        </g>
+        <rect class="mari" x="396" y="204" width="96" height="168"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="intro">
+    <p>Ten years in hospitality, most of them in Portland: a wellness club, two boutique hotels, and a few hundred events. The work I like best is the part guests never see: the training manual, the SOPs, the booking-system migration, the front desk rebuilt from a crew of five.</p>
+  </div>
+
   <section aria-labelledby="work">
-    <h2 id="work">Work</h2>
-    <ol class="roles">
-      <li class="role">
-        <span class="years">2024–2026</span>
-        <div class="role-body">
-          <h3>Knot Springs</h3>
-          <p class="title">Senior Coordinator, Reception</p>
-          <p class="sheet">$6.7M wellness club · 325 members · 6,000–8,000 visits a month</p>
-          <p>Led a nine-person reception team. Wrote a 90-page training manual and 74 SOPs, which took onboarding from months to two weeks. Then moved all 110 staff from Mindbody to Trybe in six weeks.</p>
+    <h2 class="head" id="work"><span class="num">01</span>Work</h2>
+    <ol class="ledger">
+      <li class="entry">
+        <div class="row">
+          <div class="row-main"><div class="row-label">Front Office Manager</div><div class="row-detail">Kimpton Hotel Palomar LA · Los Angeles</div></div>
+          <span class="lead"></span><span class="value">2026</span>
         </div>
       </li>
-      <li class="role">
-        <span class="years">2021–2024</span>
-        <div class="role-body">
-          <h3>Ace Hotel Portland</h3>
-          <p class="title">Director of Operations</p>
-          <p class="sheet">78 rooms · post-closure relaunch</p>
-          <p>Took the hotel from a skeleton crew of five to fully open in two weeks, hiring and training the front desk while rooms were still under renovation. Built the guest-facing systems from scratch and kept retail, minibar, and breakfast worth having through stretches under 20% occupancy.</p>
+      <li class="entry">
+        <div class="row">
+          <div class="row-main"><div class="row-label">Senior Coordinator, Reception</div><div class="row-detail">Knot Springs · Portland</div></div>
+          <span class="lead"></span><span class="value">2024–2026</span>
         </div>
+        <p class="note">Ran reception for a $6.7M wellness club with 325 members. Wrote the 90-page training manual that took onboarding from months to two weeks, and led the switch from Mindbody to Trybe.</p>
       </li>
-      <li class="role">
-        <span class="years">2018–2020</span>
-        <div class="role-body">
-          <h3>The Hoxton, Portland</h3>
-          <p class="title">Events Operations Manager</p>
-          <p class="sheet">119 rooms · U.S. West Coast launch</p>
-          <p>Opened the hotel with a 1,500-person party across seven venues and four bars, then ran 300-plus events after it. Pulled the event SOPs from five international properties into one shared playbook.</p>
+      <li class="entry">
+        <div class="row">
+          <div class="row-main"><div class="row-label">Director of Operations</div><div class="row-detail">Ace Hotel Portland · Portland</div></div>
+          <span class="lead"></span><span class="value">2021–2024</span>
         </div>
+        <p class="note">Reopened a 78-room hotel after closure with a crew of five, hiring and training the front desk while rooms were still under renovation. Built the guest-facing systems from scratch.</p>
+      </li>
+      <li class="entry">
+        <div class="row">
+          <div class="row-main"><div class="row-label">Events Operations Manager</div><div class="row-detail">The Hoxton, Portland · Portland</div></div>
+          <span class="lead"></span><span class="value">2018–2020</span>
+        </div>
+        <p class="note">Planned the opening party across seven venues and four bars, then the events that followed. Pulled the event SOPs from five international properties into one shared playbook.</p>
       </li>
     </ol>
   </section>
 
+  <section class="board" aria-labelledby="numbers">
+    <h2 class="head" id="numbers"><span class="num">02</span>By the numbers...</h2>
+    <ul class="ledger">
+      <li class="row label-lg"><span class="row-main">Events run, The Hoxton</span><span class="lead"></span><span class="value">300+</span></li>
+      <li class="row label-lg"><span class="row-main">Guests at its opening party</span><span class="lead"></span><span class="value">1,500</span></li>
+      <li class="row label-lg"><span class="row-main">SOPs written, Knot Springs</span><span class="lead"></span><span class="value">74</span></li>
+      <li class="row label-lg"><span class="row-main">Staff retrained on a new PMS</span><span class="lead"></span><span class="value">110</span></li>
+      <li class="row label-lg"><span class="row-main">Weeks to reopen Ace Hotel</span><span class="lead"></span><span class="value">2</span></li>
+    </ul>
+  </section>
+
   <section aria-labelledby="also">
-    <h2 id="also">Also</h2>
+    <h2 class="head" id="also"><span class="num">03</span>Also</h2>
     <div class="also">
-      <p>I'm writing a book, <em>Am I Doing This Right?</em>, a field guide to adulthood from someone who learned most of it on the job.</p>
-      <p>B.S. in Business Administration, Portland State University.</p>
+      <p class="note">I'm writing a book, <em>Am I Doing This Right?</em>, a field guide to adulthood from someone who learned most of it on the job.</p>
+      <ul class="ledger">
+        <li class="entry">
+          <div class="row">
+            <div class="row-main"><div class="row-label">B.S. Business Administration</div><div class="row-detail">Portland State University</div></div>
+            <span class="lead"></span><span class="value">2018</span>
+          </div>
+        </li>
+      </ul>
+      <p class="label">Tools... <span class="muted">Opera PMS · Mindbody · Trybe · Notion · InDesign · Google Suite</span></p>
     </div>
   </section>
 
   <section aria-labelledby="contact">
-    <h2 id="contact">Get in touch</h2>
-    <dl class="contact">
-      <dt>Email</dt>
-      <dd><a href="mailto:hello@stuartcoat.es">hello@stuartcoat.es</a></dd>
-      <dt>Bluesky</dt>
-      <dd><a href="https://bsky.app/profile/stuartcoat.es">@stuartcoat.es</a></dd>
-      <dt>Résumé</dt>
-      <dd>Happy to send one. Just ask.</dd>
-    </dl>
+    <h2 class="head" id="contact"><span class="num">04</span>Contact</h2>
+    <p class="note">Email is the fastest way to reach me. My résumé is yours if you ask.</p>
+    <div class="actions">
+      <a class="btn btn-accent" href="mailto:hello@stuartcoat.es">Get in touch</a>
+      <a class="btn btn-outline" href="https://bsky.app/profile/stuartcoat.es">Bluesky →</a>
+    </div>
+    <p class="label">hello@stuartcoat.es · Los Angeles, California</p>
   </section>
 
-  <footer>Portland, Oregon</footer>
+  <footer class="label muted">Stuart Coates · stuartcoat.es</footer>
 
-</main>
+</div>
 </body>
 </html>

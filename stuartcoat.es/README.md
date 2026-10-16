@@ -1,13 +1,16 @@
 # stuartcoat.es
 
-One static page (`index.html`) plus a `CNAME` file. No build step.
+One static page (`index.html`), its fonts (`fonts/`, SIL Open Font License, licence texts alongside) and a `CNAME` file. No build step.
+
+Built on the Stuart Coates design system (https://claude.ai/artifact/HohZfPPzx3RhV64z7TdoYw): Paper theme by day, Felt at night; a poster-register opener over a form-register page.
 
 ## Status
 
-Draft, October 16, 2026. Not live. Content comes from `Stuart_Coates_Resume_v1_Ops.pdf` and needs Stuart's correction pass before publishing.
+Draft v2, October 16, 2026. Not live. Content comes from `Stuart_Coates_Resume_v1_Ops.pdf` plus the design system README, and needs Stuart's correction pass before publishing.
 
 Open items:
-- ⚠️ Ace Hotel title reads "Director of Operations". Inferred from the résumé's text layer, which came out jumbled. Confirm.
+- ⚠️ Location reads Los Angeles and the newest role reads "Front Office Manager, Kimpton Hotel Palomar LA, 2026". Both come from the design system README, not a canon file. Confirm, and say whether anything after the Palomar belongs here.
+- ❓ Ace Hotel title: the résumé says "Director of Operations"; the design system's sample ledger says "Director of Front Office". Which is right?
 - ❓ Book line under "Also": keep it public or cut it?
 - ❓ LinkedIn: add a link if wanted (URL not on file).
 - Phone number deliberately left off. The résumé is "on request" so the phone number in it stays private.
