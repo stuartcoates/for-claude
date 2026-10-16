@@ -325,7 +325,7 @@ footer { padding-top: var(--space-1); border-top: var(--stroke-hair) solid var(-
    The HTML is already the finished frame, so without script, or with reduced motion, nothing moves. */
 (function () {
   var BEAT = 0.5;
-  var END = 5.5 * BEAT;
+  var END = 7 * BEAT;
   if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   function spring(t, w) { // position 0..1 and velocity per second
@@ -405,9 +405,9 @@ footer { padding-top: var(--space-1); border-top: var(--stroke-hair) solid var(-
       var m = spring(t - 3 * BEAT, 16); // beat 4: marigold drops out of the hatch
       mari.setAttribute('height', (168 * m[0]).toFixed(2));
 
-      // beat 5 and its off-beat: the voice line and the place line print left to right
-      voice.style.clipPath = 'inset(-0.2em ' + ((1 - expo(t - 4 * BEAT, 0.4)) * 100).toFixed(2) + '% -0.2em 0)';
-      place.style.clipPath = 'inset(-0.2em ' + ((1 - expo(t - 4.5 * BEAT, 0.35)) * 100).toFixed(2) + '% -0.2em 0)';
+      // beats 5 and 6: the voice line, then the place line, print left to right at half the speed of the sheets
+      voice.style.clipPath = 'inset(-0.2em ' + ((1 - expo(t - 4 * BEAT, 0.8)) * 100).toFixed(2) + '% -0.2em 0)';
+      place.style.clipPath = 'inset(-0.2em ' + ((1 - expo(t - 5 * BEAT, 0.7)) * 100).toFixed(2) + '% -0.2em 0)';
     }
 
     function finish() {
